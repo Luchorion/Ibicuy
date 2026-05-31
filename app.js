@@ -458,16 +458,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPrev = document.getElementById('btn-prev-week');
     const btnNext = document.getElementById('btn-next-week');
     const btnThis = document.getElementById('btn-this-week');
-    
-    if(btnPrev) btnPrev.onclick = () => {
+
+    if (btnPrev) btnPrev.onclick = () => {
       let parts = activeWeek.split('-W');
-      let y = parseInt(parts[0]), w = parseInt(parts[1]);
-      if(w > 1) w--; else { y--; w = 52; }
+      let y = parseInt(parts[0]);
+      let w = parseInt(parts[1]);
+
+      if (w > 1) {
+        w--;
+      } else {
+        y--;
+        w = 52;
+      }
+
       activeWeek = `${y}-W${w.toString().padStart(2, '0')}`;
       renderReuniones();
     };
-    
-    if(btnNext) btnNext.onclick = () => {
+
+    if (btnNext) btnNext.onclick = () => {
+      let parts = activeWeek.split('-W');
+      let y = parseInt(parts[0]);
+      let w = parseInt(parts[1]);
+
+      if (w < 52) {
+        w++;
+      } else {
+        y++;
+        w = 1;
+      }
+
+      activeWeek = `${y}-W${w.toString().padStart(2, '0')}`;
+      renderReuniones();
+    };
+
+    if (btnThis) btnThis.onclick = () => {
+      activeWeek = getCurrentWeek();
+      renderReuniones();
+    };
+
   }, 1000);
 });
 
